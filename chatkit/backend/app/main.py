@@ -1,16 +1,10 @@
-"""FastAPI entrypoint for the ChatKit starter backend."""
-
-from __future__ import annotations
-
-from app.server import StreamingResult
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, Response, StreamingResponse
-
-from .server import StarterChatServer
+from app.server import router
 
 app = FastAPI(title="ChatKit Starter API")
 
+# Enable CORS (for frontend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,17 +13,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chatkit_server = StarterChatServer()
-
-
-@app.post("/chatkit")
-async def chatkit_endpoint(request: Request) -> Response:
-    """Proxy the ChatKit web component payload to the server implementation."""
-    payload = await request.body()
-    result = await chatkit_server.process(payload, {"request": request})
-
-    if isinstance(result, StreamingResult):
-        return StreamingResponse(result, media_type="text/event-stream")
-    if hasattr(result, "json"):
-        return Response(content=result.json, media_type="application/json")
-    return JSONResponse(result)
+# Include routes from server.py
+app.include_router(router)
