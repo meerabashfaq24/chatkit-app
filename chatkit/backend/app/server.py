@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, AsyncIterator
 
-from agents import Runner
+
 from chatkit.agents import AgentContext, simple_to_agent_input, stream_agent_response
 from chatkit.server import ChatKitServer
 from chatkit.types import ThreadMetadata, ThreadStreamEvent, UserMessageItem
