@@ -6,11 +6,11 @@ from typing import Any, AsyncIterator
 
 
 from app.agents import AgentContext, simple_to_agent_input, stream_agent_response
-from chatkit.server import ChatKitServer
-from chatkit.types import ThreadMetadata, ThreadStreamEvent, UserMessageItem
+from app.server import ChatKitServer
+from app.types import ThreadMetadata, ThreadStreamEvent, UserMessageItem
 
 from .memory_store import MemoryStore
-from agents import Agent
+from app.agents import Agent
 
 
 MAX_RECENT_ITEMS = 30
