@@ -4,7 +4,7 @@ const readEnvString = (value: unknown): string | undefined =>
     : undefined;
 
 export const CHATKIT_API_URL =
-  readEnvString(import.meta.env.VITE_CHATKIT_API_URL) ?? "/chatkit";
+  import.meta.env.VITE_CHATKIT_API_URL ?? "/api/create-session";
 
 /**
  * ChatKit requires a domain key at runtime. Use the local fallback while

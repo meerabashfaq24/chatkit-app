@@ -15,3 +15,6 @@ app.add_middleware(
 
 # Include routes from server.py
 app.include_router(router)
+@app.post("/chatkit")
+async def chatkit_alias():
+    return await server.create_session()

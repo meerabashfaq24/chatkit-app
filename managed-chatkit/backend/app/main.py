@@ -164,3 +164,28 @@ def parse_json(response: httpx.Response) -> Mapping[str, Any]:
         return parsed if isinstance(parsed, Mapping) else {}
     except (json.JSONDecodeError, httpx.DecodingError):
         return {}
+from fastapi import FastAPI
+
+app = FastAPI()
+
+from fastapi import FastAPI, Request
+from app.server import StarterChatServer
+
+app = FastAPI(title="Managed ChatKit Session API")
+
+server = StarterChatServer()
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.post("/api/create-session")
+async def create_session():
+    return await server.create_session()
+
+
+@app.post("/chatkit")
+async def chatkit_proxy(request: Request):
+    return await server.handle_request(request)
